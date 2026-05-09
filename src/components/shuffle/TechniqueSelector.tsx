@@ -1,7 +1,7 @@
 'use client';
 
 import { useVisualizerStore } from '@/store/visualizer';
-import { shuffleTechniques, dealTechniques } from '@/data/techniques';
+import { shuffleTechniques, dealTechniques, flourishTechniques } from '@/data/techniques';
 import { Technique } from '@/types/technique';
 
 const difficultyLabel = ['', 'Beginner', 'Intermediate', 'Advanced'];
@@ -23,27 +23,27 @@ function TechniqueItem({ t, active }: { t: Technique; active: boolean }) {
   );
 }
 
+function Group({ label, techniques, activSlug }: { label: string; techniques: Technique[]; activSlug?: string }) {
+  return (
+    <div className="mt-2 first:mt-0">
+      <p className="text-xs font-semibold text-gold/60 uppercase tracking-widest px-3 mb-1">
+        {label}
+      </p>
+      {techniques.map((t) => (
+        <TechniqueItem key={t.slug} t={t} active={activSlug === t.slug} />
+      ))}
+    </div>
+  );
+}
+
 export default function TechniqueSelector() {
   const { technique } = useVisualizerStore();
 
   return (
     <div className="flex flex-col gap-1 overflow-y-auto">
-      <div className="mb-1">
-        <p className="text-xs font-semibold text-gold/60 uppercase tracking-widest px-3 mb-1">
-          Shuffles
-        </p>
-        {shuffleTechniques.map((t) => (
-          <TechniqueItem key={t.slug} t={t} active={technique?.slug === t.slug} />
-        ))}
-      </div>
-      <div className="mt-2">
-        <p className="text-xs font-semibold text-gold/60 uppercase tracking-widest px-3 mb-1">
-          Deals
-        </p>
-        {dealTechniques.map((t) => (
-          <TechniqueItem key={t.slug} t={t} active={technique?.slug === t.slug} />
-        ))}
-      </div>
+      <Group label="Shuffles" techniques={shuffleTechniques} activSlug={technique?.slug} />
+      <Group label="Deals" techniques={dealTechniques} activSlug={technique?.slug} />
+      <Group label="Flourishes" techniques={flourishTechniques} activSlug={technique?.slug} />
     </div>
   );
 }
