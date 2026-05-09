@@ -17,6 +17,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Sappie — Learn Card Games",
   description: "Browse card game rules and watch animated shuffle & deal techniques.",
+  icons: { icon: "/favicon.svg" },
 };
 
 export default function RootLayout({
